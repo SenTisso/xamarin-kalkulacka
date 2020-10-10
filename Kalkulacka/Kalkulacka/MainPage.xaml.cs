@@ -54,9 +54,9 @@ namespace Kalkulacka
             // pokud symbol neni cislo
             if (!new Regex(@"^[0-9]$").IsMatch(symbol))
             {
-                if (ResultLabel.Text == "error" && symbol != "(") // pokud tam je error, tak se nic krome ( a cisel nemuze vypsat
+                if ((ResultLabel.Text == "error" || ResultLabel.Text == "0")) // pokud ve vyrazu je error nebo 0
                 {
-                    result = false;
+                    if (symbol != "(") result = false; // tak se nic krome ( a cisel nemuze vypsat
                 }
                 else if (!new Regex(@"[0-9]").IsMatch(lastResultCharacter)) // pokud posledni charakter expression neni cislo
                 {
@@ -124,7 +124,6 @@ namespace Kalkulacka
                         }
 
                         ResultLabel.Text += buttonValue;
-
                     }
 
                     break;
