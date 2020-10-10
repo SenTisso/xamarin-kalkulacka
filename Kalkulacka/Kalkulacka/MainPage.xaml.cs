@@ -17,13 +17,21 @@ namespace Kalkulacka
             InitializeComponent();
         }
 
-        public string Calculate()
+        /// <summary>Metoda na vypocitani matematickeho vyrazu ze stringu.</summary>
+        /// <param name="expression">Matematicky vyraz.</param>
+        /// <returns>Vysledek nebo "error" jako string.</returns>
+        public string Calculate(string expression)
         {
             string result = "";
 
             try
             {
-                result = Convert.ToDouble(new DataTable().Compute(ResultLabel.Text, null)).ToString("0.000000");
+                result = Convert.ToDouble(new DataTable().Compute(expression, null)) // dostane vypocet z textu
+                    .ToString("0.000000") // prevede double na string
+                    .TrimEnd(new Char[] { '0' }); // odstrani prebytecne nuly na konci
+
+                // pokud je na konci tecka, tak ji odstrani
+                if (result.Last().ToString() == ".") result = result.Replace(".", "");
             }
             catch
             {
@@ -98,7 +106,7 @@ namespace Kalkulacka
                     break;
 
                 case "=":
-                    ResultLabel.Text = Calculate();
+                    ResultLabel.Text = Calculate(ResultLabel.Text);
                     break;
 
                 default:
