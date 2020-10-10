@@ -3,8 +3,32 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              xmlns:Kalkulacka="clr-namespace:Kalkulacka"
-             x:Class="Kalkulacka.MainPage">
+             x:Class="Kalkulacka.MainPage"
+             BackgroundColor="#000">
     
+
+    <ContentPage.Resources>
+        <!-- pridavani properties pro vsechny buttony -->
+
+        <Style TargetType="Button" x:Key="buttonBaseStyle">
+            <Setter Property="FontSize" Value="35"/>
+            <Setter Property="CornerRadius" Value="50"/>
+            <Setter Property="BackgroundColor" Value="#333333"/>
+            <Setter Property="TextColor" Value="#fff"/>
+        </Style>
+
+        <Style TargetType="Button" BasedOn="{StaticResource buttonBaseStyle}"></Style> <!-- proste prida base styly vsem buttonum -->
+
+        <Style x:Key="orange" TargetType="Button" BasedOn="{StaticResource buttonBaseStyle}">
+            <Setter Property="BackgroundColor" Value="#ff9f0a"/>
+            <Setter Property="FontSize" Value="42"/>
+        </Style>
+        <Style x:Key="lightGrey" TargetType="Button" BasedOn="{StaticResource buttonBaseStyle}">
+            <Setter Property="BackgroundColor" Value="#a5a5a5"/>
+            <Setter Property="TextColor" Value="#000"/>
+            <Setter Property="FontSize" Value="32"/>
+        </Style>
+    </ContentPage.Resources>
 
     <Grid VerticalOptions="Fill">
         <Grid.RowDefinitions>
@@ -35,30 +59,30 @@
                 <RowDefinition Height="*"></RowDefinition>
             </Grid.RowDefinitions>
 
-            <Button Clicked="OnButtonClicked" Text="C" Grid.Row="0" Grid.Column="0"/>
-            <Button Clicked="OnButtonClicked" Text="(" Grid.Row="0" Grid.Column="1"/>
-            <Button Clicked="OnButtonClicked" Text=")" Grid.Row="0" Grid.Column="2"/>
-            <Button Clicked="OnButtonClicked" Text="DEL" Grid.Row="0" Grid.Column="3"/>
+            <Button Clicked="OnButtonClicked" Text="C" Grid.Row="0" Grid.Column="0" Style="{StaticResource lightGrey}" />
+            <Button Clicked="OnButtonClicked" Text="(" Grid.Row="0" Grid.Column="1" Style="{StaticResource lightGrey}" />
+            <Button Clicked="OnButtonClicked" Text=")" Grid.Row="0" Grid.Column="2" Style="{StaticResource lightGrey}" />
+            <Button Clicked="OnButtonClicked" Text="DEL" Grid.Row="0" Grid.Column="3" Style="{StaticResource lightGrey}" FontSize="28" />
 
             <Button Clicked="OnButtonClicked" Text="7" Grid.Row="1" Grid.Column="0" />
             <Button Clicked="OnButtonClicked" Text="8" Grid.Row="1" Grid.Column="1" />
             <Button Clicked="OnButtonClicked" Text="9" Grid.Row="1" Grid.Column="2" />
-            <Button Clicked="OnButtonClicked" Text="/" Grid.Row="1" Grid.Column="3"/>
+            <Button Clicked="OnButtonClicked" Text="/" Grid.Row="1" Grid.Column="3" Style="{StaticResource orange}" />
 
             <Button Clicked="OnButtonClicked" Text="4" Grid.Row="2" Grid.Column="0" />
             <Button Clicked="OnButtonClicked" Text="5" Grid.Row="2" Grid.Column="1" />
             <Button Clicked="OnButtonClicked" Text="6" Grid.Row="2" Grid.Column="2" />
-            <Button Clicked="OnButtonClicked" Text="*" Grid.Row="2" Grid.Column="3"/>
+            <Button Clicked="OnButtonClicked" Text="*" Grid.Row="2" Grid.Column="3" Style="{StaticResource orange}" />
 
             <Button Clicked="OnButtonClicked" Text="1" Grid.Row="3" Grid.Column="0" />
             <Button Clicked="OnButtonClicked" Text="2" Grid.Row="3" Grid.Column="1" />
             <Button Clicked="OnButtonClicked" Text="3" Grid.Row="3" Grid.Column="2" />
-            <Button Clicked="OnButtonClicked" Text="-" Grid.Row="3" Grid.Column="3"/>
+            <Button Clicked="OnButtonClicked" Text="-" Grid.Row="3" Grid.Column="3" Style="{StaticResource orange}" />
 
             <Button Clicked="OnButtonClicked" Text="0" Grid.Row="4" Grid.Column="0" />
             <Button Clicked="OnButtonClicked" Text="." Grid.Row="4" Grid.Column="1" />
-            <Button Clicked="OnButtonClicked" Text="=" Grid.Row="4" Grid.Column="2"/>
-            <Button Clicked="OnButtonClicked" Text="+" Grid.Row="4" Grid.Column="3"/>
+            <Button Clicked="OnButtonClicked" Text="=" Grid.Row="4" Grid.Column="2" Style="{StaticResource orange}" />
+            <Button Clicked="OnButtonClicked" Text="+" Grid.Row="4" Grid.Column="3" Style="{StaticResource orange}" />
         </Grid>
     </Grid>
 </ContentPage>
