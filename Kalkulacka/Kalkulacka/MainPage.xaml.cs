@@ -47,6 +47,22 @@ namespace Kalkulacka
 
             switch (buttonValue)
             {
+                case "DEL":
+                    // pokud tam je error nebo pouze zacatecni nula
+                    if (resultText == "error" || resultText == "0" || resultText.Length <= 1)
+                    {
+                        ResultLabel.Text = "0";
+                    }
+                    else 
+                    {
+                        ResultLabel.Text = resultText.Substring(0, resultText.Length - 1);
+                    }
+                    break;
+
+                case "C":
+                    ResultLabel.Text = "0";
+                    break;
+
                 case "=":
                     ResultLabel.Text = Calculate();
                     break;
