@@ -43,20 +43,23 @@
 
         <Grid
             Grid.Row="1"
-            VerticalOptions="Fill">
+            VerticalOptions="Fill"
+            Padding="{x:Static Kalkulacka:App.buttonSpacing}"
+            ColumnSpacing="{x:Static Kalkulacka:App.buttonSpacing}"
+            RowSpacing="{x:Static Kalkulacka:App.buttonSpacing}">
 
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"></ColumnDefinition>
-                <ColumnDefinition Width="*"></ColumnDefinition>
-                <ColumnDefinition Width="*"></ColumnDefinition>
-                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="{x:Static Kalkulacka:App.buttonSize}"></ColumnDefinition>
+                <ColumnDefinition Width="{x:Static Kalkulacka:App.buttonSize}"></ColumnDefinition>
+                <ColumnDefinition Width="{x:Static Kalkulacka:App.buttonSize}"></ColumnDefinition>
+                <ColumnDefinition Width="{x:Static Kalkulacka:App.buttonSize}"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="*"></RowDefinition>
-                <RowDefinition Height="*"></RowDefinition>
-                <RowDefinition Height="*"></RowDefinition>
-                <RowDefinition Height="*"></RowDefinition>
-                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="{x:Static Kalkulacka:App.buttonSize}"></RowDefinition>
+                <RowDefinition Height="{x:Static Kalkulacka:App.buttonSize}"></RowDefinition>
+                <RowDefinition Height="{x:Static Kalkulacka:App.buttonSize}"></RowDefinition>
+                <RowDefinition Height="{x:Static Kalkulacka:App.buttonSize}"></RowDefinition>
+                <RowDefinition Height="{x:Static Kalkulacka:App.buttonSize}"></RowDefinition>
             </Grid.RowDefinitions>
 
             <Button Clicked="OnButtonClicked" Text="C" Grid.Row="0" Grid.Column="0" Style="{StaticResource lightGrey}" />
