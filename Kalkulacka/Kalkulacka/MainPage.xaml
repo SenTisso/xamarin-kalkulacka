@@ -36,7 +36,7 @@
             <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
 
-        <Label
+        <Label x:Name="ResultLabel"
             Grid.Row="0" 
             HorizontalOptions="End"
             VerticalOptions="End"
