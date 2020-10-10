@@ -41,6 +41,10 @@ namespace Kalkulacka
             return result;
         }
 
+
+        /// <summary>Zkontroluje zadavany znak s textem a usoudi, zda je matematicky legalni ho zadat.</summary>
+        /// <param name="symbol">Znak, ktery uzivatel zadava.</param>
+        /// <returns></returns>
         private bool ShouldAddSymbol(string symbol)
         {
             bool result = true;
