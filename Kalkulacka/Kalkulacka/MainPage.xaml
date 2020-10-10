@@ -39,7 +39,11 @@
         <Label
             Grid.Row="0" 
             HorizontalOptions="End"
-            VerticalOptions="End" />
+            VerticalOptions="End"
+            Margin="0,0,15,0"
+            Text="0"
+            FontSize="20"
+            TextColor="#fff" />
 
         <Grid
             Grid.Row="1"
