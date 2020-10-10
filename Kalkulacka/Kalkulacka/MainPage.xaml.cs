@@ -41,45 +41,44 @@ namespace Kalkulacka
             return result;
         }
 
-
-        /// <summary>Zkontroluje zadavany znak s textem a usoudi, zda je matematicky legalni ho zadat.</summary>
+        /// <summary>Zkontroluje zadavany znak s textem a usoudi, zda je matematicky legalni ho zadat (pouze za ucelem lepsiho UX).</summary>
         /// <param name="symbol">Znak, ktery uzivatel zadava.</param>
-        /// <returns></returns>
-        private bool ShouldAddSymbol(string symbol)
+        /// <returns>Zda se ma zadana hodnota tlacitka pridat do vyrazu.</returns>
+        private bool ShouldAddSymbol(string buttonSymbol)
         {
-            bool result = true;
+            bool result = false;
+
             string lastResultCharacter = "";
             if (ResultLabel.Text.Length > 0) lastResultCharacter = ResultLabel.Text.Last().ToString();
 
-            // pokud symbol neni cislo
-            if (!new Regex(@"^[0-9]$").IsMatch(symbol))
-            {
-                if ((ResultLabel.Text == "error" || ResultLabel.Text == "0")) // pokud ve vyrazu je error nebo 0
-                {
-                    if (symbol != "(") result = false; // tak se nic krome ( a cisel nemuze vypsat
-                }
-                else if (!new Regex(@"[0-9]").IsMatch(lastResultCharacter)) // pokud posledni charakter expression neni cislo
-                {
-                    if (symbol == ")") // pokud je symbol ) a posledni je )
-                    {
-                        if (lastResultCharacter != ")") result = false;
-                    }
-                    else if (symbol == "(") // pokud je symbol ) a posledni je )
-                    {
-                        if (lastResultCharacter == ")") result = false;
-                    }
-                    else if (lastResultCharacter != ")") result = false;
-                }
-                else if (symbol == "(") result = false;
+            bool isButtonSymbolANumber = new Regex(@"^[0-9]$").IsMatch(buttonSymbol); // zda je hodnota tlacitka cislo
+            bool isLastCharANumber = new Regex(@"^[0-9]$").IsMatch(lastResultCharacter); // zda je posledni character vyrazu cislo
 
-            }
-            else // pokud symbol je cislo
+            if (buttonSymbol == ")") // pokud je hodnota tlacitka ")"...
             {
-                if (lastResultCharacter == ")") result = false; // po ) nejde vypisovat cisla
+                if (lastResultCharacter == ")" || isLastCharANumber) result = true; // ...tak se muze vypsat pouze po ")" nebo po cislu
+            }
+            else if (buttonSymbol == "(") // pokud je hodnota tlacitka "("...
+            {
+                if (lastResultCharacter != ")" && !isLastCharANumber) result = true; // ...tak se muze vypsat pouze po nejakem vyrazu (ne po cislech a ")")
+            }
+            else if (!isButtonSymbolANumber) // pokud je hodnota tlacitka nejaky dalsi vyraz (ne cislo)...
+            {
+                if (isLastCharANumber || lastResultCharacter == ")") result = true; // ...tak se muze vypsat pouze po cislu nebo po ")"
+            }
+            else // pokud je hodnota tlacitka nejake cislo...
+            {
+                if (lastResultCharacter != ")") result = true; // ...tak se muze vypsat vzdy, krome po ")"
+            }
+
+            if (ResultLabel.Text == "error" || ResultLabel.Text == "0") // pokud ve vyrazu je error nebo pouze 0...
+            {
+                if (buttonSymbol == "(" || isButtonSymbolANumber) result = true; // tak se muze vypsat pouze "(" nebo cislo
             }
 
             return result;
         }
+
 
         /// <summary>Event funkce, ktera je spustena po kliknuti na tlacitka.</summary>
         /// <param name="sender">Objekt, na ktery se kliklo.</param>
@@ -94,7 +93,7 @@ namespace Kalkulacka
             switch (buttonValue)
             {
                 case "DEL":
-                    // pokud tam je error nebo pouze zacatecni nula
+                    // pokud tam je error nebo pouze zacatecni nula nebo pokud se maze posledni symbol
                     if (resultText == "error" || resultText == "0" || resultText.Length <= 1)
                     {
                         ResultLabel.Text = "0";
