@@ -18,6 +18,22 @@ namespace Kalkulacka
             InitializeComponent();
         }
 
+        public string Calculate()
+        {
+            string result = "";
+
+            try
+            {
+                result = Convert.ToDouble(new DataTable().Compute(ResultLabel.Text, null)).ToString("0.000000");
+            }
+            catch
+            {
+                result = "error";
+            }
+
+            return result;
+        }
+
 
         /// <summary>Event funkce, ktera je spustena po kliknuti na tlacitka.</summary>
         /// <param name="sender">Objekt, na ktery se kliklo.</param>
@@ -25,6 +41,28 @@ namespace Kalkulacka
         void OnButtonClicked(object sender, EventArgs args)
         {
 
+            Button button = (Button)sender;
+            string buttonValue = button.Text; // text buttonu, ktery predstavuje jeho hodnotu
+            string resultText = ResultLabel.Text;
+
+            switch (buttonValue)
+            {
+                case "=":
+                    ResultLabel.Text = Calculate();
+                    break;
+
+                default:
+                    if (resultText == "error" || resultText == "0")
+                    {
+                        ResultLabel.Text = buttonValue;
+                    }
+                    else
+                    {
+                        ResultLabel.Text += buttonValue; 
+                    }
+
+                    break;
+            }
         }
     }
 }
