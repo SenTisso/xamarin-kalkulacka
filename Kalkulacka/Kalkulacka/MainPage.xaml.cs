@@ -6,7 +6,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
-using System.Data;
 using System.Text.RegularExpressions;
 
 namespace Kalkulacka
@@ -34,6 +33,41 @@ namespace Kalkulacka
             return result;
         }
 
+        private bool ShouldAddSymbol(string symbol)
+        {
+            bool result = true;
+            string lastResultCharacter = "";
+            if (ResultLabel.Text.Length > 0) lastResultCharacter = ResultLabel.Text.Last().ToString();
+
+            // pokud symbol neni cislo
+            if (!new Regex(@"^[0-9]$").IsMatch(symbol))
+            {
+                if (ResultLabel.Text == "error" && symbol != "(") // pokud tam je error, tak se nic krome ( a cisel nemuze vypsat
+                {
+                    result = false;
+                }
+                else if (!new Regex(@"[0-9]").IsMatch(lastResultCharacter)) // pokud posledni charakter expression neni cislo
+                {
+                    if (symbol == ")") // pokud je symbol ) a posledni je )
+                    {
+                        if (lastResultCharacter != ")") result = false;
+                    }
+                    else if (symbol == "(") // pokud je symbol ) a posledni je )
+                    {
+                        if (lastResultCharacter == ")") result = false;
+                    }
+                    else if (lastResultCharacter != ")") result = false;
+                }
+                else if (symbol == "(") result = false;
+
+            }
+            else // pokud symbol je cislo
+            {
+                if (lastResultCharacter == ")") result = false; // po ) nejde vypisovat cisla
+            }
+
+            return result;
+        }
 
         /// <summary>Event funkce, ktera je spustena po kliknuti na tlacitka.</summary>
         /// <param name="sender">Objekt, na ktery se kliklo.</param>
@@ -68,13 +102,17 @@ namespace Kalkulacka
                     break;
 
                 default:
-                    if (resultText == "error" || resultText == "0")
+
+                    // muze se pridat symbol?
+                    if (ShouldAddSymbol(buttonValue))
                     {
-                        ResultLabel.Text = buttonValue;
-                    }
-                    else
-                    {
-                        ResultLabel.Text += buttonValue; 
+                        if (resultText == "error" || resultText == "0")
+                        {
+                            ResultLabel.Text = "";
+                        }
+
+                        ResultLabel.Text += buttonValue;
+
                     }
 
                     break;
